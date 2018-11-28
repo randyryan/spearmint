@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Timer;
 
+import org.spearmint.base.Booleans;
+import org.spearmint.base.Strings;
 import org.spearmint.io.ByteArray;
 import org.spearmint.io.Files;
 import org.spearmint.io.Streams;
 import org.spearmint.io.URLs;
-import org.spearmint.primitive.Booleans;
-import org.spearmint.primitive.Strings;
 import org.spearmint.reflect.Reflection;
 
 /**

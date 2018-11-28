@@ -2,7 +2,7 @@
  * Copyright (c) 2010-2018 Ryan Li Wan. All rights reserved.
  */
 
-package org.spearmint.primitive;
+package org.spearmint.base;
 
 /**
  * Primitive Utility

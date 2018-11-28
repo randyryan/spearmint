@@ -2,12 +2,12 @@
  * Copyright (c) 2010-2018 Ryan Li Wan. All rights reserved.
  */
 
-package org.spearmint.primitive;
+package org.spearmint.base;
 
 import java.util.List;
 
+import org.spearmint.base.Strings;
 import org.spearmint.collect.Lists;
-import org.spearmint.primitive.Strings;
 import org.spearmint.time.Stopwatch;
 
 import junit.framework.Test;

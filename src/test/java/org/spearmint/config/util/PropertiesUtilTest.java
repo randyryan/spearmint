@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Assert;
+import org.spearmint.base.Longs;
 import org.spearmint.collect.Lists;
 import org.spearmint.collect.Maps;
 import org.spearmint.config.util.PropertiesUtil;
 import org.spearmint.config.util.PropertiesUtilInternal;
-import org.spearmint.primitive.Longs;
 import org.spearmint.time.Stopwatch;
 
 import junit.framework.Test;

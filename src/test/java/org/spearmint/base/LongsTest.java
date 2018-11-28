@@ -2,12 +2,13 @@
  * Copyright (c) 2010-2018 Ryan Li Wan. All rights reserved.
  */
 
-package org.spearmint.primitive;
+package org.spearmint.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.spearmint.base.Longs;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

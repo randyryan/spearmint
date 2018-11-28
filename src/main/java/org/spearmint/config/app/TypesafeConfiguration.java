@@ -6,7 +6,7 @@ package org.spearmint.config.app;
 
 import java.util.List;
 
-import org.spearmint.primitive.Ints;
+import org.spearmint.base.Ints;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
