@@ -2,26 +2,26 @@
  * Copyright (c) 2010-2018 Ryan Li Wan. All rights reserved.
  */
 
-package org.spearmint.reflect;
+package org.spearmint.util;
 
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Reflection
+ * Reflector
  *
  * @author ryan131
  * @since Aug 13, 2013, 5:05:17 PM
  */
-public class Reflection {
+public class Reflector {
 
-  private static final Logger logger = Logger.getLogger(Reflection.class.getName());
+  private static final Logger logger = Logger.getLogger(Reflector.class.getName());
 
   private Object object;
   private Class<?> clazz;
 
-  public Reflection(Object object) {
+  public Reflector(Object object) {
     this.object = object;
     this.clazz = object.getClass();
   }

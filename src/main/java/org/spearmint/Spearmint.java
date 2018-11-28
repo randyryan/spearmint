@@ -14,7 +14,7 @@ import org.spearmint.io.ByteArray;
 import org.spearmint.io.Files;
 import org.spearmint.io.Streams;
 import org.spearmint.io.URLs;
-import org.spearmint.reflect.Reflection;
+import org.spearmint.util.Reflector;
 
 /**
  * Spearmint
@@ -46,8 +46,8 @@ public final class Spearmint {
 
   // Reflection
 
-  public static Reflection reflect(Object object) {
-    return new Reflection(object);
+  public static Reflector reflect(Object object) {
+    return new Reflector(object);
   }
 
   // Seed - Give me a String and I'll see what I can do.

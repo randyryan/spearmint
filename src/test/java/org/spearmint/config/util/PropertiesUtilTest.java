@@ -14,7 +14,7 @@ import org.spearmint.collect.Lists;
 import org.spearmint.collect.Maps;
 import org.spearmint.config.util.PropertiesUtil;
 import org.spearmint.config.util.PropertiesUtilInternal;
-import org.spearmint.time.Stopwatch;
+import org.spearmint.util.Stopwatch;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

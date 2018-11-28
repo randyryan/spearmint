@@ -2,7 +2,7 @@
  * Copyright (c) 2010-2018 Ryan Li Wan. All rights reserved.
  */
 
-package org.spearmint.time;
+package org.spearmint.util;
 
 import java.time.Duration;
 

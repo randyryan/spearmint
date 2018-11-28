@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.spearmint.base.Strings;
 import org.spearmint.collect.Lists;
-import org.spearmint.time.Stopwatch;
+import org.spearmint.util.Stopwatch;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
