@@ -13,36 +13,56 @@ package org.spearmint.base;
 public final class Throwables {
   private Throwables() {}
 
-  public static void illegalArgument() throws IllegalArgumentException {
-    throw new IllegalArgumentException();
+  public static RuntimeException wrapInRuntimeException(Throwable throwable) {
+    if (throwable instanceof RuntimeException) {
+      Throw.IllegalArgument(throwable.getClass().getName() + " is already a RuntimeException.");
+    }
+    return new RuntimeException(throwable);
   }
 
-  public static void illegalArgument(String message) throws IllegalArgumentException {
-    throw new IllegalArgumentException(message);
+  public static RuntimeException wrapInRuntimeException(Throwable throwable, String message) {
+    return new RuntimeException(message, throwable);
   }
 
-  public static void illegalState() throws IllegalStateException {
-    throw new IllegalStateException();
+  public static void propagateInRuntime(Exception checkedException) throws RuntimeException {
+    throw wrapInRuntimeException(checkedException, "\n" + checkedException.getClass().getName() +
+        " is thrown at " + checkedException.getStackTrace()[0]);
   }
 
-  public static void illegalState(String message) throws IllegalStateException {
-    throw new IllegalStateException(message);
-  }
+  public static class Throw {
 
-  public static void nullPointer() throws NullPointerException {
-    throw new NullPointerException();
-  }
+    public static void IllegalArgument() throws IllegalArgumentException {
+      throw new IllegalArgumentException();
+    }
 
-  public static void nullPointer(String message) throws NullPointerException {
-    throw new NullPointerException(message);
-  }
+    public static void IllegalArgument(String message) throws IllegalArgumentException {
+      throw new IllegalArgumentException(message);
+    }
 
-  public static void unsupportedOperation() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException();
-  }
+    public static void IllegalState() throws IllegalStateException {
+      throw new IllegalStateException();
+    }
 
-  public static void unsupportedOperation(String message) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException(message);
+    public static void IllegalState(String message) throws IllegalStateException {
+      throw new IllegalStateException(message);
+    }
+
+    public static void NullPointer() throws NullPointerException {
+      throw new NullPointerException();
+    }
+
+    public static void NullPointer(String message) throws NullPointerException {
+      throw new NullPointerException(message);
+    }
+
+    public static void UnsupportedOperation() throws UnsupportedOperationException {
+      throw new UnsupportedOperationException();
+    }
+
+    public static void UnsupportedOperation(String message) throws UnsupportedOperationException {
+      throw new UnsupportedOperationException(message);
+    }
+
   }
 
 }

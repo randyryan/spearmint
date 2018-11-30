@@ -5,8 +5,9 @@
 package org.spearmint.util;
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.spearmint.base.Throwables;
+import org.spearmint.base.Throwables.Throw;
 
 /**
  * Reflector
@@ -16,7 +17,23 @@ import java.util.logging.Logger;
  */
 public class Reflector {
 
-  private static final Logger logger = Logger.getLogger(Reflector.class.getName());
+  public static Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
+    Field field = null;
+    try {
+      field = clazz.getDeclaredField(name);
+    } catch (NoSuchFieldException nsfe) {
+      Class<?> superclass = clazz.getSuperclass();
+      if (superclass == null) {
+        throw nsfe;
+      }
+      return getField(superclass, name);
+    }
+    if (field == null) {
+      throw new NullPointerException("Unable to get the field \"" + name + "\"" +
+          "\" in class \"" + clazz);
+    }
+    return field;
+  }
 
   private Object object;
   private Class<?> clazz;
@@ -26,65 +43,57 @@ public class Reflector {
     this.clazz = object.getClass();
   }
 
-  private static Field getField(Class<?> clazz, String name) throws NoSuchFieldException {
-    Field field = null;
-    try {
-      field = clazz.getDeclaredField(name);
-    } catch (NoSuchFieldException nsfe) {
-      return getField(clazz.getSuperclass(), name);
-    } catch (SecurityException ignored) {}
-    return field;
+  public ReflectedField field(String name) {
+    return new ReflectedField(name).makeAccessible();
   }
 
-  public void set(String name, Object value) {
-    try {
+  public class ReflectedField {
+
+    private String name;
+    private Field field;
+
+    public ReflectedField(String name) {
       try {
-        Field field = getField(clazz, name);
+        this.name = name;
+        this.field = getField(clazz, name);
+      } catch (NoSuchFieldException nsfe) {
+        Throwables.propagateInRuntime(nsfe);
+      }
+    }
+
+    public ReflectedField makeAccessible() throws SecurityException {
+      if (!isAccessible()) {
         field.setAccessible(true);
+      }
+      return this;
+    }
+
+    public boolean isAccessible() {
+      return field.isAccessible();
+    }
+
+    public void set(Object value) {
+      try {
         field.set(object, value);
-      } catch (NoSuchFieldException nsfe) {
-        throw nsfe;
+      } catch (IllegalAccessException iae) {
+        Throwables.propagateInRuntime(iae);
       }
-    } catch (SecurityException se) {
-      logger.log(Level.WARNING, "A SecurityException is thrown while setting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , se);
-    } catch (NoSuchFieldException nsfe) {
-      logger.log(Level.WARNING, "A NoSuchFieldException is thrown while setting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , nsfe);
-    } catch (IllegalArgumentException iae) {
-      logger.log(Level.WARNING, "A IllegalArgumentException is thrown while setting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , iae);
-    } catch (IllegalAccessException iae) {
-      logger.log(Level.WARNING, "A IllegalAccessException is thrown while setting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , iae);
     }
-  }
 
-  @SuppressWarnings("unchecked")
-  public <T> T get(String name) {
-    T t = null;
-    try {
+    @SuppressWarnings("unchecked")
+    public <T> T get() {
+      Object value = null;
       try {
-        Field field = getField(clazz, name);
-        field.setAccessible(true);
-        t = (T) field.get(object);
-      } catch (NoSuchFieldException nsfe) {
-        throw nsfe;
+        value = field.get(object);
+      } catch (IllegalAccessException iae) {
+        Throwables.propagateInRuntime(iae);
       }
-    } catch (SecurityException se) {
-      logger.log(Level.WARNING, "A SecurityException is thrown while getting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , se);
-    } catch (NoSuchFieldException nsfe) {
-      logger.log(Level.WARNING, "A NoSuchFieldException is thrown while getting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , nsfe);
-    } catch (IllegalArgumentException iae) {
-      logger.log(Level.WARNING, "A IllegalArgumentException is thrown while getting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , iae);
-    } catch (IllegalAccessException iae) {
-      logger.log(Level.WARNING, "A IllegalAccessException is thrown while getting the " +
-          "\"" + name + "\" in \"" + object.getClass() + "\"." , iae);
+      if (value == null) {
+        Throw.NullPointer("Unable to get the field \"" + name + "\".");
+      }
+      return (T) value;
     }
-    return t;
+
   }
 
 }
