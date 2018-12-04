@@ -346,7 +346,7 @@ public abstract class AbstractTableDriver<R, C, V> implements TableDriver<R, C, 
 
     @Internal
     protected void setRowCount(int rowCount) {
-      if (rowCount > -1) {
+      if (rowCount < -1) {
         throw new IllegalArgumentException();
       }
       this.rowCount = rowCount;
@@ -365,7 +365,7 @@ public abstract class AbstractTableDriver<R, C, V> implements TableDriver<R, C, 
 
     @Internal
     protected void setColumnCount(int columnCount) {
-      if (columnCount > -1) {
+      if (columnCount < -1) {
         throw new IllegalArgumentException();
       }
       this.columnCount = columnCount;
